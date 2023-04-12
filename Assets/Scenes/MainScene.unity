@@ -261,7 +261,7 @@ TrailRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 815121785}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -534,13 +534,13 @@ MonoBehaviour:
   _spawnDelay: 0.1
   _velocityBirds: 30
   _neighborDistantion: 30
-  _collisionDistantion: 10
-  _velocityMatching: 10
+  _collisionDistantion: 4
+  _velocityMatching: 0.25
   _flockCentering: 0.2
-  _collisionAvoid: 4
-  _attractPull: 3
+  _collisionAvoid: 2
+  _attractPull: 2
   _attractPush: 2
-  _attractPushDistation: 1
+  _attractPushDistation: 5
 --- !u!1 &1134987074
 GameObject:
   m_ObjectHideFlags: 0
