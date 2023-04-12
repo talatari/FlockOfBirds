@@ -534,13 +534,13 @@ MonoBehaviour:
   _spawnDelay: 0.1
   _velocityBirds: 30
   _neighborDistantion: 30
-  _collisionDistantion: 4
-  _velocityMatching: 0.25
+  _collisionDistantion: 10
+  _velocityMatching: 10
   _flockCentering: 0.2
-  _collisionAvoid: 2
-  _attractPull: 2
+  _collisionAvoid: 4
+  _attractPull: 3
   _attractPush: 2
-  _attractPushDistation: 5
+  _attractPushDistation: 1
 --- !u!1 &1134987074
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,9 +14,9 @@ public class SpawnerBirds : MonoBehaviour
     [SerializeField] public float _velocityBirds;
     [SerializeField] public float _neighborDistantion;
     [SerializeField] public float _collisionDistantion;
-    [SerializeField] private float _velocityMatching;
-    [SerializeField] private float _flockCentering;
-    [SerializeField] private float _collisionAvoid;
+    [SerializeField] public float _velocityMatching;
+    [SerializeField] public float _flockCentering;
+    [SerializeField] public float _collisionAvoid;
     [SerializeField] public float _attractPull;
     [SerializeField] public float _attractPush;
     [SerializeField] public float _attractPushDistation;

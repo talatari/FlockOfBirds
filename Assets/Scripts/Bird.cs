@@ -2,6 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(TrailRenderer))]
+[RequireComponent(typeof(Neighborhood))]
 public class Bird : MonoBehaviour
 {
     [HideInInspector] public Rigidbody _rigidbodyBird;
@@ -15,6 +16,12 @@ public class Bird : MonoBehaviour
     private Vector3 _velocityAttractor;
     private SpawnerBirds _spawnerBirds;
     private float _fixDeltaTime;
+    private Neighborhood _neighborhood;
+    private Vector3 _velocityAvoid;
+    private Vector3 _tooClosePosition;
+    private Vector3 _velocityAlign;
+    private Vector3 _velocityToCenterNeighborhood;
+    private Vector3 _zero = Vector3.zero;
 
     private void Awake()
     {
@@ -27,6 +34,7 @@ public class Bird : MonoBehaviour
 
     private void RandomStartBirds()
     {
+        _neighborhood = GetComponent<Neighborhood>();
         _rigidbodyBird = GetComponent<Rigidbody>();
 
         PositionBird = Random.insideUnitSphere * SpawnerBirds._spawnerBirds._spawnRadius;
@@ -75,11 +83,53 @@ public class Bird : MonoBehaviour
         _spawnerBirds = SpawnerBirds._spawnerBirds;
         _fixDeltaTime = Time.fixedDeltaTime;
 
+        CollisionPrevention();
+
+        VelocityAgreement();
+
+        ConcentrationOfNeighbors();
+
         Attraction();
 
         ApplyVelocityChange();
 
         LookHead();
+    }
+
+    private void CollisionPrevention()
+    {
+        _velocityAvoid = _zero;
+        _tooClosePosition = _neighborhood.AvgClosePositionBirds;
+
+        if (_tooClosePosition != _zero)
+        {
+            _velocityAvoid = PositionBird - _tooClosePosition;
+            _velocityAvoid.Normalize();
+            _velocityAvoid *= _spawnerBirds._velocityBirds;
+        }
+    }
+
+    private void VelocityAgreement()
+    {
+        _velocityAlign = _neighborhood.AvgVelocityBirds;
+
+        if (_velocityAlign != _zero)
+        {
+            _velocityAlign.Normalize();
+            _velocityAlign *= _spawnerBirds._velocityBirds;
+        }
+    }
+
+    private void ConcentrationOfNeighbors()
+    {
+        _velocityToCenterNeighborhood = _neighborhood.AvgPositionBirds;
+
+        if (_velocityToCenterNeighborhood != _zero)
+        {
+            _velocityToCenterNeighborhood -= transform.position;
+            _velocityToCenterNeighborhood.Normalize();
+            _velocityToCenterNeighborhood *= _spawnerBirds._velocityBirds;
+        }
     }
 
     private void Attraction()
@@ -91,15 +141,38 @@ public class Bird : MonoBehaviour
 
     private void ApplyVelocityChange()
     {
-        if (_deltaToAttractor.magnitude > _spawnerBirds._attractPushDistation)
+        if (_velocityAvoid != _zero)
         {
             _velocityBird = Vector3.Lerp(
-                _velocityBird, _velocityAttractor, _spawnerBirds._attractPull * _fixDeltaTime);
+                _velocityBird, _velocityAvoid, _spawnerBirds._collisionAvoid * _fixDeltaTime);
         }
         else
         {
-            _velocityBird = Vector3.Lerp(
-                _velocityBird, -1 * _velocityAttractor, _spawnerBirds._attractPull * _fixDeltaTime);
+            if (_velocityAlign != _zero)
+            {
+                _velocityBird = Vector3.Lerp(
+                    _velocityBird, _velocityAlign, _spawnerBirds._velocityMatching * _fixDeltaTime);
+            }
+
+            if (_velocityToCenterNeighborhood != _zero)
+            {
+                _velocityBird = Vector3.Lerp(
+                    _velocityBird, _velocityAlign, _spawnerBirds._flockCentering * _fixDeltaTime);
+            }
+
+            if (_velocityAttractor != _zero)
+            {
+                if (_deltaToAttractor.magnitude > _spawnerBirds._attractPushDistation)
+                {
+                    _velocityBird = Vector3.Lerp(
+                        _velocityBird, _velocityAttractor, _spawnerBirds._attractPull * _fixDeltaTime);
+                }
+                else
+                {
+                    _velocityBird = Vector3.Lerp(
+                        _velocityBird, -1 * _velocityAttractor, _spawnerBirds._attractPull * _fixDeltaTime);
+                }
+            }
         }
 
         _velocityBird = _velocityBird.normalized * _spawnerBirds._velocityBirds;
