@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(TrailRenderer))]
 public class Bird : MonoBehaviour
 {
-    [SerializeField] private Rigidbody _rigidbodyBird;
+    [HideInInspector] public Rigidbody _rigidbodyBird;
 
     private Vector3 _startRandomVelocity;
     private Color _randomColorBird;
@@ -29,14 +29,14 @@ public class Bird : MonoBehaviour
     {
         _rigidbodyBird = GetComponent<Rigidbody>();
 
-        StartRandomPosition = Random.insideUnitSphere * SpawnerBirds._spawnerBirds._spawnRadius;
+        PositionBird = Random.insideUnitSphere * SpawnerBirds._spawnerBirds._spawnRadius;
         _startRandomVelocity = Random.onUnitSphere * SpawnerBirds._spawnerBirds._velocityBirds;
         _rigidbodyBird.velocity = _startRandomVelocity;
     }
 
     private void LookHead()
     {
-        transform.LookAt(StartRandomPosition + _rigidbodyBird.velocity);
+        transform.LookAt(PositionBird + _rigidbodyBird.velocity);
     }
 
     private void SetRandomColorBirds()
@@ -57,7 +57,7 @@ public class Bird : MonoBehaviour
         _trailRenderer.material.SetColor("_TintColor", _randomColorBird);
     }
 
-    public Vector3 StartRandomPosition
+    public Vector3 PositionBird
     {
         get
         {
@@ -85,7 +85,7 @@ public class Bird : MonoBehaviour
     private void Attraction()
     {
         _velocityBird = _rigidbodyBird.velocity;
-        _deltaToAttractor = Attractor._positionZero - StartRandomPosition;
+        _deltaToAttractor = Attractor._positionZero - PositionBird;
         _velocityAttractor = _deltaToAttractor.normalized * _spawnerBirds._velocityBirds;
     }
 
