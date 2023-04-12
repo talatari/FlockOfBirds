@@ -23,4 +23,6 @@ public class Attractor : MonoBehaviour
         transform.position = _tempPosition;
         _positionZero = _tempPosition;
     }
+
+
 }

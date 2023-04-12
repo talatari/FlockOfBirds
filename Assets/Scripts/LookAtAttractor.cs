@@ -6,4 +6,6 @@ public class LookAtAttractor : MonoBehaviour
     {
         transform.LookAt(Attractor._positionZero);
     }
+
+
 }
