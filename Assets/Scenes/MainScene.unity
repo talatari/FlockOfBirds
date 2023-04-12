@@ -428,6 +428,8 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -501,6 +503,44 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f23f4c92e4e4433694622015092ea46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5352a3904b2f0470482d87421fdb1ed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _birdPrefab: {fileID: 3642545602675238617, guid: 43a75b9ec88dc4c0e981018482b0e276, type: 3}
+  _birdAnchor: {fileID: 1134987075}
+  _amountBirds: 100
+  _spawnRadius: 100
+  _spawnDelay: 0.1
+  _velocityBirds: 30
+  _neighborDistantion: 30
+  _collisionDistantion: 4
+  _velocityMatching: 0.25
+  _flockCentering: 0.2
+  _collisionAvoid: 2
+  _attractPull: 2
+  _attractPush: 2
+  _attractPushDistation: 5
 --- !u!1 &1134987074
 GameObject:
   m_ObjectHideFlags: 0
